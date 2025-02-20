@@ -2,18 +2,20 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
 
         JujutsuSorcerer[] feiticeiros = {
-                new GojouSatoru(),
-                new GetoSuguru(),
-                new NanamiKento(),
                 new MakiZenin(),
-                new NobaraKugisaki(),
+                new YujiItadori(),
                 new MegumiFushiguro(),
-                new YujiItadori()
+                new YuttaOkkotsu(),
+                new NobaraKugisaki()
+        };
+        Vilao[] viloes = {
+                new Mahito(),
+                new Sukuna()
         };
 
 
@@ -31,30 +33,60 @@ public class Main {
         }
 
         JujutsuSorcerer jogador = feiticeiros[escolhaJogador];
-        JujutsuSorcerer computador = feiticeiros[random.nextInt(feiticeiros.length)];
+        Vilao computador = viloes[random.nextInt(viloes.length)];
 
         System.out.println("\n" + jogador.getName() + " VS " + computador.getName());
         System.out.println("Que a batalha comece! \n");
 
-        while (jogador.estaVivo() && computador.estaVivo()) {
-            System.out.println("⚡ Sua vez de atacar! ⚡⚡⚡");
-            jogador.atacar(computador);
-
-            if (!jogador.estaVivo()) {
-                System.out.println("\uD83C\uDF89 Parabens " +  computador.getName() + " foi derrotado! Você Venceu!");
-            break;
+        while(jogador.estaVivo() && computador.estaVivo()){
+            //turno jogador
+            System.out.println("Sua vez de atacar! Escolha um golpe: ");
+            for(int i = 0; i < jogador.getAtaques().length; i++){
+                Ataque ataque = jogador.getAtaques()[i];
+                System.out.println((1 + i) + ". " + ataque.getNome() + (ataque.podeUsar()? "" : "(CoolDown)"));
             }
 
-            System.out.println("⚠\uFE0F Turno do adversário... ⚠\uFE0F");
-            computador.atacar(jogador);
+            int escolhaAtaque;
+            while(true){
+                System.out.println("Escolha o número do ataque: ");
+                escolhaAtaque = scanner.nextInt() - 1;
 
-            if (!jogador.estaVivo()) {
-                System.out.println("💀 Você foi derrotado! " + computador.getName() + " venceu a batalha. 💀");
+                if (escolhaAtaque >= 0 && escolhaAtaque < jogador.getAtaques().length && jogador.getAtaques()[escolhaAtaque].podeUsar()){
+                    break;
+                }
+                System.out.println("Ataque indisponível! Escolha outro. ");
+            }
+
+            Ataque ataqueEscolhido =  jogador.getAtaques()[escolhaAtaque];
+            ataqueEscolhido.usar();
+            computador.receberDano(ataqueEscolhido.getDano());
+            System.out.println(jogador.getName() + " usou " + ataqueEscolhido.getNome() + " causando "  + ataqueEscolhido.getDano() + " de Dano!");
+
+            if (!computador.estaVivo()) {
+                System.out.println("Você vendeu! " + computador.getName() + " foi derrotado");
+                break;
+            }
+
+            Thread.sleep(3000);
+
+            //Turno do computador
+            System.out.println("\n Turno do Adversario ...");
+            Ataque ataqueComputador;
+            do {
+                ataqueComputador = computador.getAtaques()[random.nextInt(computador.getAtaques().length)];
+            }while (!ataqueComputador.podeUsar());
+
+            ataqueComputador.usar();
+            jogador.receberDano(ataqueComputador.getDano());
+            System.out.println(computador.getName() + " usou " + ataqueComputador.getNome() + " causando "+ ataqueComputador.getDano()+ " de Dano!");
+
+            if (!jogador.estaVivo()){
+                System.out.println("\n Você Foi derrotado! " + computador.getName() + " venceu a Batalha!");
             }
         }
 
         System.out.println("\n \uD83C\uDFAE Fim do jogo!! Obrigado por jogar. !!!\uD83C\uDFAE ");
 
-
+        scanner.close();
     }
 }
