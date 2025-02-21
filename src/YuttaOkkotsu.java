@@ -7,5 +7,4 @@ public class YuttaOkkotsu extends JujutsuSorcerer{
                 new Ataque("Ryõiki Tenkai: Hanten", 32),
         });
     }
-
 }

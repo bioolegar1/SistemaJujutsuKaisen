@@ -63,11 +63,11 @@ public class Main {
             System.out.println(jogador.getName() + " usou " + ataqueEscolhido.getNome() + " causando "  + ataqueEscolhido.getDano() + " de Dano!");
 
             if (!computador.estaVivo()) {
-                System.out.println("Você vendeu! " + computador.getName() + " foi derrotado");
+                System.out.println("Você VENCEU! " + computador.getName() + " foi derrotado");
                 break;
             }
 
-            Thread.sleep(3000);
+            Thread.sleep(1000);
 
             //Turno do computador
             System.out.println("\n Turno do Adversario ...");

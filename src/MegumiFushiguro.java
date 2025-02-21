@@ -7,5 +7,4 @@ public class MegumiFushiguro extends JujutsuSorcerer{
                 new Ataque("Ryoiki Tenkai: Chimera Shadõ Gãden", 28),
         });
     }
-
 }

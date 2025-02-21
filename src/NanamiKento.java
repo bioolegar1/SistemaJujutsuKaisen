@@ -7,5 +7,4 @@ public class NanamiKento extends JujutsuSorcerer{
                 new Ataque("Ryõiki Tenkai", 28),
         });
     }
-
 }
