@@ -31,8 +31,8 @@ public class Main {
         Feiticeiro jogador = feiticeiros.get(escolhaJogador);
         Vilao computador = viloes.get(random.nextInt(viloes.size()));
 
-        System.out.println("\n" + jogador.getName() + " VS " + computador.getName());
-        System.out.println("Que a batalha comece! \n");
+        System.out.println("\n" + jogador.getName()+ ": " + jogador.getNivel()  + "\n ======  VS ======   \n " + computador.getName() + ": "+ computador.getNivel());
+        System.out.println("\n\nQue a batalha comece! \n");
 
         while(jogador.estaVivo() && computador.estaVivo()){
             //turno jogador
@@ -55,8 +55,8 @@ public class Main {
 
             Ataque ataqueEscolhido =  jogador.getAtaques()[escolhaAtaque];
             ataqueEscolhido.usar();
-            computador.receberDano(ataqueEscolhido.getDano());
             System.out.println(jogador.getName() + " usou " + ataqueEscolhido.getNome() + " causando "  + ataqueEscolhido.getDano() + " de Dano!");
+            computador.receberDano(ataqueEscolhido.getDano());
 
             if (!computador.estaVivo()) {
                 System.out.println("Você VENCEU! " + computador.getName() + " foi derrotado");
@@ -73,8 +73,8 @@ public class Main {
             }while (!ataqueComputador.podeUsar());
 
             ataqueComputador.usar();
-            jogador.receberDano(ataqueComputador.getDano());
             System.out.println(computador.getName() + " usou " + ataqueComputador.getNome() + " causando "+ ataqueComputador.getDano()+ " de Dano!");
+            jogador.receberDano(ataqueComputador.getDano());
 
             if (!jogador.estaVivo()){
                 System.out.println("\n Você Foi derrotado! " + computador.getName() + " venceu a Batalha!");
