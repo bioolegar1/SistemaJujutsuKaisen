@@ -31,4 +31,8 @@ public class Ataque {
     public void usar() {
 
     }
+
+    public int getCsutoStamina() {
+        return 0;
+    }
 }
